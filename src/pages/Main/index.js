@@ -7,11 +7,11 @@ import logo from '../../assets/logo.png';
 export default function Menu ({ navigation }) {
     return (
       <>
-        <StatusBar barStyle="light-content" backgroundColor="#181818" />
+        <StatusBar barStyle="light-content" backgroundColor="#151C48" />
         
         <View style={styles.mainContainer}>
 
-          <Image source={logo} style={{height: 38, width: 208, marginBottom: 30, marginTop:50}}/>
+          <Image source={logo} style={{marginLeft:10 ,height: 75, width: 287, marginBottom: 30, marginTop:50}}/>
 
           <View style={styles.input}>
             <TextInput style={{color: "#242424", marginLeft: 20}} placeholder="Usuário, email ou telefone"/>
@@ -46,23 +46,23 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#181818"
+        backgroundColor: "#151C48"
     },
     input: {
-      height: 50,
-      width: 270,
-      borderRadius: 8,
-      marginTop: 8,
+      height: 48,
+      width: "85%",
+      borderRadius: 4,
+      marginTop: 6,
       backgroundColor: "#f2f2f8",
       display: "flex",
       justifyContent: "center"
     },
     btn: {
       height: 50,
-      width: 270,
-      borderRadius: 8,
+      width: "85%",
+      borderRadius: 4,
       marginTop: 15,
-      backgroundColor: "#ff6816",
+      backgroundColor: "#00A1D7",
       display: "flex",
       justifyContent: "center",
       alignItems: "center"
