@@ -1,8 +1,17 @@
 import React from 'react';
 import {
-    Text ,View, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,TouchableOpacity, TextInput
+    Text, 
+    View, 
+    Image, 
+    StyleSheet, 
+    Dimensions, 
+    ImageBackground, 
+    StatusBar,
+    TouchableOpacity, 
+    TextInput
   } from 'react-native';
-import logo from '../../assets/logo.png';
+  import logo from '../../assets/logo.png';
+  import google from '../../assets/google.png';
 
 export default function Menu ({ navigation }) {
     return (
@@ -11,7 +20,7 @@ export default function Menu ({ navigation }) {
         
         <View style={styles.mainContainer}>
 
-          <Image source={logo} style={{marginLeft:10 ,height: 75, width: 287, marginBottom: 30, marginTop:50}}/>
+        <Image source={logo} resizeMode="contain" style={{marginLeft:10, height: 100, width: 290, marginBottom: 30, marginTop:50}}/>
 
           <View style={styles.input}>
             <TextInput style={{color: "#242424", marginLeft: 20}} placeholder="Usuário, email ou telefone"/>
@@ -26,13 +35,15 @@ export default function Menu ({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Text style={{fontSize: 16, color: "white", marginTop: 15}}> Login com conta do Google </Text>
+            <Text style={{fontSize: 14, color: "white", marginTop: 15}}> Login com conta do Google
+              <Image source={google} resizeMode="contain" style={{height: 20, width: 20}}/>
+            </Text>
           </TouchableOpacity>
 
           <Text style={{fontSize: 12, color: "white", marginTop: 5}}> ou </Text>
 
           <TouchableOpacity>
-            <Text style={{fontSize: 16, color: "white", marginTop: 5}}>Cadastre-se  </Text>
+            <Text style={{fontSize: 14, color: "white", marginTop: 5}}>Cadastre-se  </Text>
           </TouchableOpacity>
 
         </View>
@@ -42,11 +53,11 @@ export default function Menu ({ navigation }) {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#151C48"
+      flex: 1,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#151C48"
     },
     input: {
       height: 48,

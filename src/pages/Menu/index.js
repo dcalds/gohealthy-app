@@ -11,15 +11,28 @@ export default function Menu ({ navigation }) {
 
     return (
       <>
-        <StatusBar barStyle="light-content" backgroundColor="#181818" />
+        <StatusBar barStyle="light-content" backgroundColor="#151C48" />
         
         <View style={styles.mainContainer}>
 
-          <Image source={logo} style={{height: 27, width: 150, marginBottom: 10}}/>
+          <Image source={logo} resizeMode="contain" style={{height: 50, 
+                                                            width: 200, 
+                                                            marginBottom:15}}/>
+
+          <View style={styles.input}>
+            <TextInput style={{color: "#242424", marginLeft: 20}} 
+                      placeholder="Busque um evento"/>
+          </View>
 
           <View style={{height: 170, width: "100%"}}>
 
-            <Text style={{fontSize: 18, color: "white", marginTop: 10, marginLeft: 10, fontWeight: "bold"}}> Confira as novas modalidades </Text>
+            <Text style={{fontSize: 18, 
+                          color: "white", 
+                          marginTop: 10, 
+                          marginLeft: 10, 
+                          fontWeight: "bold"}}> 
+            Confira as novas modalidades 
+            </Text>
 
             <ScrollView horizontal={true}>
 
@@ -30,14 +43,14 @@ export default function Menu ({ navigation }) {
                                           height: 100, 
                                           width: 100, 
                                           borderRadius: 10, 
-                                          backgroundColor: "#545454",
+                                          backgroundColor: "#f2f2f8",
                                           display: "flex",
                                           justifyContent: "flex-end",
                                           alignItems: "center"
                                           }}>
                                                         
                   <Text style={{fontSize: 16,
-                                color: "#ff6816",
+                                color: "#00A1D7",
                                 fontWeight: "bold",
                                 marginBottom: 10
                                 }}>
@@ -65,7 +78,7 @@ export default function Menu ({ navigation }) {
                                                        height: 185, 
                                                        width: 185, 
                                                        borderRadius: 10, 
-                                                       backgroundColor: "#545454",
+                                                       backgroundColor: "#f2f2f8",
                                                        display: "flex",
                                                        justifyContent: "flex-end",
                                                        alignItems: "center"
@@ -73,7 +86,7 @@ export default function Menu ({ navigation }) {
 
                      <Text style={{marginBottom: 10,
                                 fontSize: 12,
-                                color: "white",
+                                color: "#00A1D7",
                                 fontWeight: "bold"
                                 }}>
                     {element}</Text>       
@@ -97,6 +110,15 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#181818"
+        backgroundColor: "#151C48"
+    },
+    input: {
+      height: 48,
+      width: "90%",
+      borderRadius: 4,
+      marginTop: 6,
+      backgroundColor: "#f2f2f8",
+      display: "flex",
+      justifyContent: "center"
     }
 })
