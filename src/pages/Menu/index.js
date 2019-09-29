@@ -15,9 +15,7 @@ export default function Menu ({ navigation }) {
         
         <View style={styles.mainContainer}>
 
-          <Image source={logo} resizeMode="contain" style={{height: 50, 
-                                                            width: 200, 
-                                                            marginBottom:15}}/>
+          
 
           <View style={styles.input}>
             <TextInput style={{color: "#242424", marginLeft: 20}} 
@@ -99,6 +97,14 @@ export default function Menu ({ navigation }) {
             
           </View>
 
+          <TouchableOpacity style={styles.btn} onPress={() => {navigation.navigate('Profile')}}>
+            <Text style={{marginBottom: 10,
+                                fontSize: 12,
+                                color: "#ffffff",
+                                fontWeight: "bold"
+                                }}> Perfil </Text>
+          </TouchableOpacity>
+
         </View>
       </>
     );
@@ -120,5 +126,15 @@ const styles = StyleSheet.create({
       backgroundColor: "#f2f2f8",
       display: "flex",
       justifyContent: "center"
+    },
+    btn: {
+      height: 50,
+      width: "85%",
+      borderRadius: 4,
+      marginTop: 15,
+      backgroundColor: "#00A1D7",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
     }
 })
