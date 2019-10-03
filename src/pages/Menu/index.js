@@ -2,127 +2,109 @@ import React, { useState } from 'react';
 import {
   KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, ImageBackground, StatusBar, TouchableOpacity, TextInput, ScrollView
 } from 'react-native';
+
+import test from '../../assets/test.png';
+import test2 from '../../assets/test2.png';
 import logo from '../../assets/logo.png';
 
 export default function Menu({ navigation }) {
 
   const [busca, setBusca] = useState(null)
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setSestaques] = useState(["Corrida dos Idosos", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
+  const [destaques, setSestaques] = useState(["Amar e não ser amado", "Cornos na ativa", "Corrida dos Idosos", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
 
   function handleText(novaBusca) {
     setBusca(novaBusca)
   }
 
   return (
-    <KeyboardAvoidingView eneabled style={styles.mainContainer}>
+    <>
 
-      <StatusBar barStyle="light-content" backgroundColor="#151C48" />
+      <KeyboardAvoidingView eneabled style={styles.mainContainer}>
 
-      <View style={styles.input}>
-        <TextInput style={{ color: "#242424", marginLeft: 20 }}
-          onChangeText={handleText}
-          placeholder="Busque um evento" />
-      </View>
+        <Image resizeMode="contain" style={{height: 40, width: screenWidth,margin: 10}} source={logo}/>
 
-      <View style={{ height: 150, width: "100%" }}>
+        <StatusBar barStyle="light-content" backgroundColor="#151C48" />
 
-        <Text style={{
-          fontSize: 18,
-          color: "white",
-          marginTop: 10,
-          marginLeft: 10,
-          fontWeight: "bold"
-        }}>
-          Confira as novas modalidades {busca}
-            </Text>
+        <View style={styles.input}>
+          <TextInput style={{ color: "#242424", marginLeft: 20 }}
+            onChangeText={handleText}
+            placeholder="Busque um evento" />
+        </View>
 
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {/* EVENTOS POR CATEGORIA */}
 
-          {
-            modalidades.map((element, index) => {
+        <View style={{ height: 150, width: "100%", marginTop: 20 }}>
 
-              return (<TouchableOpacity key={index} style={{
-                margin: 8,
-                height: 100,
-                width: 100,
-                borderRadius: 10,
-                backgroundColor: "#f2f2f8",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center"
-              }}>
+          <Text style={styles.txt}> Eventos por categoria {busca} </Text>
 
-                <Text style={{
-                  fontSize: 16,
-                  color: "#00A1D7",
-                  fontWeight: "bold",
-                  marginBottom: 10
-                }}>
-                  {element}</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
-              </TouchableOpacity>)
+            {
+              modalidades.map((element, index) => {
 
-            })
-          }
+                return (
+                  <ImageBackground key={index} source={test2} style={styles.imgBkg}>
 
-        </ScrollView>
+                    <Text style={styles.txtCat}> {element} </Text>
 
-      </View>
+                  </ImageBackground>)
 
-      <View style={{ height: 240, width: "100%" }}>
+              })
+            }
 
-        <Text style={{ fontSize: 18, 
-          color: "white", 
-          fontWeight: "bold", 
-          marginLeft: 10 }}> 
-          Eventos em destaque 
-        </Text>
+          </ScrollView>
 
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        </View>
 
-          {
-            destaques.map((element, index) => {
-              return (
+        {/* EVENTOS PRÓXIMOS */}
 
-                <TouchableOpacity key={index} style={{
-                  margin: 10,
-                  height: 185,
-                  width: 185,
-                  borderRadius: 10,
-                  backgroundColor: "#f2f2f8",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center"
-                }}>
+        <View style={{ height: 300, width: "100%", marginTop: 5 }}>
 
-                  <Text style={{
-                    marginBottom: 10,
-                    fontSize: 12,
-                    color: "#00A1D7",
-                    fontWeight: "bold"
-                  }}>
-                    {element}</Text>
-                </TouchableOpacity>
+          <Text style={styles.txt}> Confira os próximos eventos </Text>
 
-              )
-            })
-          }
+          <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
 
-        </ScrollView>
+            {
+              destaques.map((element, index) => {
+                return (
 
-      </View>
+                  <TouchableOpacity key={index} style={styles.rowEvents}>
 
-      <TouchableOpacity style={styles.btn} onPress={() => { navigation.navigate('Profile') }}>
-        <Text style={{
-          marginBottom: 10,
-          fontSize: 12,
-          color: "#ffffff",
-          fontWeight: "bold"
-        }}> Perfil </Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Image
+                        style={{ height: 75, width: 75, marginLeft: 0 }}
+                        source={test}
+                      />
+
+                      <View style={{ marginTop: 8 }}>
+
+                        <Text style={styles.txtEvt}> {element} </Text>
+
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={styles.txtEvtDet}>Data: 25/25/2025 </Text>
+                          <Text style={styles.txtEvtDet}>Local: Centro </Text>
+                        </View>
+
+                      </View>
+                    </View>
+
+                  </TouchableOpacity>
+
+                )
+              })
+            }
+
+          </ScrollView>
+
+        </View>
+      </KeyboardAvoidingView>
+
+      <TouchableOpacity onPress={() => {navigation.navigate('Profile')}} style={styles.btn}>
+        <Text style={styles.txt}>Prefil</Text>
       </TouchableOpacity>
 
-    </KeyboardAvoidingView>
+    </>
   );
 }
 
@@ -131,8 +113,7 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: screenHeight,
-    justifyContent: "center",
+    height: screenHeight - 75,
     alignItems: "center",
     backgroundColor: "#151C48"
   },
@@ -142,16 +123,58 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "#f2f2f8",
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 10
   },
   btn: {
-    height: 50,
-    width: "85%",
-    borderRadius: 4,
-    marginTop: 15,
+    flex: 1,
+    width: screenWidth,
     backgroundColor: "#00A1D7",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
+  },
+  imgBkg: {
+    margin: 8,
+    height: 100,
+    width: 100,
+    borderRadius: 8,
+    backgroundColor: "#f2f2f8",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  rowEvents: {
+    margin: 10,
+    height: 75,
+    borderRadius: 8,
+    width: "95%",
+    backgroundColor: "#f2f2f8",
+    justifyContent: "center",
+  },
+  txt: {
+    fontSize: 18,
+    color: "white",
+    marginLeft: 10,
+    marginBottom: 5,
+    fontWeight: "bold"
+  },
+  txtCat: {
+    fontSize: 16,
+    color: "white",
+  },
+  txtEvt: {
+    fontSize: 20,
+    color: "#151C48",
+    fontWeight: "bold",
+    marginBottom: 10,
+    marginLeft: 10
+  },
+  txtEvtDet: {
+    fontSize: 12,
+    color: "#00A1D7",
+    fontWeight: "bold",
+    marginBottom: 10,
+    marginLeft: 17
   }
 })

@@ -29,7 +29,7 @@ export default function Intro({ navigation }) {
 
                     <Image source={first} resizeMode="contain" style={styles.img} />
 
-                    <Text style={styles.txtScreen}> Seja fitness bem rápido</Text>
+                    <Text style={styles.txtScreen}> Busque por atividades físicas </Text>
 
                 </View>
 
@@ -37,7 +37,7 @@ export default function Intro({ navigation }) {
 
                     <Image source={second} resizeMode="contain" style={styles.img} />
 
-                    <Text style={styles.txtScreen}> Fique gostosa malhando</Text>
+                    <Text style={styles.txtScreen}> Encontre incentivo todos os dias </Text>
 
                 </View>
 
@@ -45,7 +45,7 @@ export default function Intro({ navigation }) {
 
                     <Image source={third} resizeMode="contain" style={styles.img} />
 
-                    <Text style={styles.txtScreen}> Vire o verdadeiro monstro</Text>
+                    <Text style={styles.txtScreen}> Melhore sua saúde </Text>
                 </View>
 
             </ScrollView>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     screen: {
-        height: screenHeight - 130,
+        height: screenHeight - 100,
         width: screenWidth,
         justifyContent: "center",
         alignItems: "center",
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    bottomButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
+    bottomButton: {        
         height: 60,
         width: screenWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: "#00A1D7"
     }
 })
