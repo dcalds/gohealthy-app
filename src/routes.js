@@ -5,14 +5,18 @@ import Main from '~/pages/Main';
 import Menu from '~/pages/Menu';
 import Intro from '~/pages/Intro';
 import Profile from '~/pages/Profile';
+import Category from '~/pages/Category';
+import Event from '~/pages/Event';
 
-const Routes = createAppContainer(createStackNavigator(
+const Tabs = createAppContainer(createStackNavigator(
     
     { 
         Intro: {screen: Intro, navigationOptions: {header: null}},
         Main: {screen: Main, navigationOptions: { header: null }},
         Menu: {screen: Menu, navigationOptions: { header: null }},
-        Profile: {screen: Profile, navigationOptions: { header: null }}
+        Profile: {screen: Profile, navigationOptions: { header: null }},
+        Category: {screen: Category, navigationOptions: { header: null }},
+        Event: {screen: Event, navigationOptions: { header: null }},
     } 
     
     , 
@@ -21,4 +25,4 @@ const Routes = createAppContainer(createStackNavigator(
 
 ));
 
-export default Routes;
+export default Tabs;

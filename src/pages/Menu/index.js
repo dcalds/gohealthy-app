@@ -9,22 +9,24 @@ import logo from '../../assets/logo.png';
 
 export default function Menu({ navigation }) {
 
+  const username = navigation.getParam('username')
+
   const [busca, setBusca] = useState(null)
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setSestaques] = useState(["Amar e não ser amado", "Cornos na ativa", "Corrida dos Idosos", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
+  const [destaques, setSestaques] = useState(["Amar e não ser amado", "Cornos na ativa", "Corrida dos Idosos", "Pernas pra que te quero", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
 
   function handleText(novaBusca) {
     setBusca(novaBusca)
   }
 
   return (
-    <>
-
       <KeyboardAvoidingView eneabled style={styles.mainContainer}>
 
-        <Image resizeMode="contain" style={{height: 40, width: screenWidth,margin: 10}} source={logo}/>
-
         <StatusBar barStyle="light-content" backgroundColor="#151C48" />
+
+        <TouchableOpacity onPress={() => {navigation.navigate('Profile', {username})}} style={{height: 40, width: screenWidth, marginTop: 10}}>
+          <Text style={styles.txtName}>Olá, { username != '' ? username : 'Visitante'}!</Text>
+        </TouchableOpacity>
 
         <View style={styles.input}>
           <TextInput style={{ color: "#242424", marginLeft: 20 }}
@@ -34,9 +36,9 @@ export default function Menu({ navigation }) {
 
         {/* EVENTOS POR CATEGORIA */}
 
-        <View style={{ height: 150, width: "100%", marginTop: 20 }}>
+        <View style={{ height: 90, width: "100%", marginTop: 20 }}>
 
-          <Text style={styles.txt}> Eventos por categoria {busca} </Text>
+          <Text style={styles.txt}> Eventos por categoria </Text>
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
@@ -44,11 +46,13 @@ export default function Menu({ navigation }) {
               modalidades.map((element, index) => {
 
                 return (
-                  <ImageBackground key={index} source={test2} style={styles.imgBkg}>
+                  <TouchableOpacity key={index} 
+                                    style={styles.imgBkg}
+                                    onPress={() => {navigation.navigate('Category', { element })}}>
 
                     <Text style={styles.txtCat}> {element} </Text>
 
-                  </ImageBackground>)
+                  </TouchableOpacity>)
 
               })
             }
@@ -59,7 +63,7 @@ export default function Menu({ navigation }) {
 
         {/* EVENTOS PRÓXIMOS */}
 
-        <View style={{ height: 300, width: "100%", marginTop: 5 }}>
+        <View style={{ height: 400, width: "100%", marginTop: 5 }}>
 
           <Text style={styles.txt}> Confira os próximos eventos </Text>
 
@@ -69,12 +73,13 @@ export default function Menu({ navigation }) {
               destaques.map((element, index) => {
                 return (
 
-                  <TouchableOpacity key={index} style={styles.rowEvents}>
+                  <TouchableOpacity key={index} 
+                                    style={styles.rowEvents}
+                                    onPress={() => {navigation.navigate('Event', { element })}}>
 
                     <View style={{ flexDirection: "row" }}>
                       <Image
-                        style={{ height: 75, width: 75, marginLeft: 0 }}
-                        source={test}
+                        style={{ backgroundColor:"skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }}
                       />
 
                       <View style={{ marginTop: 8 }}>
@@ -99,12 +104,6 @@ export default function Menu({ navigation }) {
 
         </View>
       </KeyboardAvoidingView>
-
-      <TouchableOpacity onPress={() => {navigation.navigate('Profile')}} style={styles.btn}>
-        <Text style={styles.txt}>Prefil</Text>
-      </TouchableOpacity>
-
-    </>
   );
 }
 
@@ -113,7 +112,7 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: screenHeight - 75,
+    height: screenHeight,
     alignItems: "center",
     backgroundColor: "#151C48"
   },
@@ -136,10 +135,10 @@ const styles = StyleSheet.create({
   },
   imgBkg: {
     margin: 8,
-    height: 100,
+    height: 45,
     width: 100,
-    borderRadius: 8,
-    backgroundColor: "#f2f2f8",
+    borderRadius: 4,
+    backgroundColor: "skyblue",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
   rowEvents: {
     margin: 10,
     height: 75,
-    borderRadius: 8,
+    borderRadius: 4,
     width: "95%",
     backgroundColor: "#f2f2f8",
     justifyContent: "center",
@@ -176,5 +175,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     marginLeft: 17
+  },
+  txtName: {
+    fontSize: 24,
+    color: "white",
+    marginLeft: 10,
+    marginBottom: 5,
+    fontWeight: "bold"
   }
 })

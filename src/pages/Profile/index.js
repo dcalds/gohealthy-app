@@ -6,12 +6,14 @@ import logo from '../../assets/logo.png';
 
 export default function Menu({ navigation }) {
 
+    const username = navigation.getParam('username')
+
     return (
         <View style={styles.container}>
 
-            <Image style={styles.img}></Image>
+            <Image source={{uri: 'https://avatars3.githubusercontent.com/u/31120411?s=460&v=4'}} style={styles.img}></Image>
 
-            <Text style={styles.txtName}>Danilo Caldas</Text>
+            <Text style={styles.txtName}>{ username != '' ? username : 'Visitante'}</Text>
             <Text style={styles.txtClass}>ASPIRANTE</Text>
 
             <TouchableOpacity style={styles.btnBack} onPress={() => { navigation.navigate('Menu') }}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -14,6 +14,13 @@ import logo from '../../assets/logo.png';
 import google from '../../assets/google.png';
 
 export default function Menu({ navigation }) {
+
+  const [username, setUsername] = useState('')
+
+  function handleUser(novoNome) {
+    setUsername(novoNome)
+  }
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#151C48" />
@@ -23,28 +30,34 @@ export default function Menu({ navigation }) {
         <Image source={logo} resizeMode="contain" style={{ marginLeft: 10, height: 100, width: 290, marginBottom: 30, marginTop: 50 }} />
 
         <View style={styles.input}>
-          <TextInput style={{ color: "#242424", marginLeft: 20 }} placeholder="Usuário, email ou telefone" />
+          <TextInput style={{ color: "#242424", marginLeft: 20 }} 
+                    placeholder="Digite seu nome"
+                    onChangeText={handleUser} />
         </View>
 
+        {/*
         <View style={styles.input}>
-          <TextInput style={{ color: "#242424", marginLeft: 20 }} placeholder="Senha" />
+          <TextInput style={{ color: "#242424", marginLeft: 20 }} placeholder="Senha"  />
         </View>
+         */}
 
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Menu')}>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Menu', {username})}>
           <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}> Entrar </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={{ fontSize: 14, color: "white", marginTop: 15 }}> Login com conta do Google
-              <Image source={google} resizeMode="contain" style={{ height: 20, width: 20 }} />
+        <View style={{flexDirection: "row", marginTop: 15}}>
+          
+          <Text style={{ fontSize: 14, color: "white" }}> 
+            Ainda não tem uma conta?
           </Text>
-        </TouchableOpacity>
 
-        <Text style={{ fontSize: 12, color: "white", marginTop: 5 }}> ou </Text>
+          <TouchableOpacity>
+            <Text style={{ fontSize: 14, color: "skyblue", marginLeft: 5 }}> 
+              Cadastre-se aqui.
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={{ fontSize: 14, color: "white", marginTop: 5 }}>Cadastre-se  </Text>
-        </TouchableOpacity>
+        </View>
 
       </View>
     </>

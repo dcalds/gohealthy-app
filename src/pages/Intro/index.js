@@ -27,7 +27,7 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <Image source={first} resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img} />
 
                     <Text style={styles.txtScreen}> Busque por atividades físicas </Text>
 
@@ -35,7 +35,7 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <Image source={second} resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img} />
 
                     <Text style={styles.txtScreen}> Encontre incentivo todos os dias </Text>
 
@@ -43,7 +43,7 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <Image source={third} resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img} />
 
                     <Text style={styles.txtScreen}> Melhore sua saúde </Text>
                 </View>
@@ -85,8 +85,10 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
     img: {
+        backgroundColor: "white",
         height: 250,
         width: 250,
+        borderRadius: 150,
         marginBottom: 50,
         marginTop: 15
     },
