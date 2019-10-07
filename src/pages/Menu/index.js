@@ -13,7 +13,7 @@ export default function Menu({ navigation }) {
 
   const [busca, setBusca] = useState(null)
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setSestaques] = useState(["Amar e não ser amado", "Cornos na ativa", "Corrida dos Idosos", "Pernas pra que te quero", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
+  const [destaques, setSestaques] = useState(["Passei no parque", "Corrida pela saúde", "Idosos na ativa", "Pernas pra que te quero", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
 
   function handleText(novaBusca) {
     setBusca(novaBusca)

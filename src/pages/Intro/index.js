@@ -3,9 +3,7 @@ import {
     Text, View, Image, StyleSheet, Dimensions, ImageBackground, StatusBar, TouchableOpacity, TextInput, ScrollView, Animated
 } from 'react-native';
 
-import first from '../../assets/first.png'
-import second from '../../assets/second.png'
-import third from '../../assets/third.png'
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Intro({ navigation }) {
 
@@ -27,7 +25,9 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <View resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img}>
+                        <Icon name="running" size={150} color="#00A1D7" />
+                    </View>                    
 
                     <Text style={styles.txtScreen}> Busque por atividades físicas </Text>
 
@@ -35,7 +35,9 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <View resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img}>
+                        <Icon name="user-friends" size={125} color="#00A1D7" />
+                    </View>     
 
                     <Text style={styles.txtScreen}> Encontre incentivo todos os dias </Text>
 
@@ -43,7 +45,9 @@ export default function Intro({ navigation }) {
 
                 <View style={styles.screen}>
 
-                    <View resizeMode="contain" style={styles.img} />
+                    <View resizeMode="contain" style={styles.img}>
+                        <Icon style={{marginTop:15}} name="heartbeat" size={150} color="#00A1D7" />
+                    </View>     
 
                     <Text style={styles.txtScreen}> Melhore sua saúde </Text>
                 </View>
@@ -90,7 +94,9 @@ const styles = StyleSheet.create({
         width: 250,
         borderRadius: 150,
         marginBottom: 50,
-        marginTop: 15
+        marginTop: 15,
+        justifyContent: "center",
+        alignItems: "center"
     },
     screen: {
         height: screenHeight - 100,

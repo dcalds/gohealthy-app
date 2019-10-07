@@ -2,8 +2,8 @@ import React from 'react';
 
 import '~/config/ReactotronConfig';
 
-import Tabs from '~/routes';
+import Stack from '~/routes';
 
-const App = () => <Tabs />;
+const App = () => <Stack />;
 
 export default App;

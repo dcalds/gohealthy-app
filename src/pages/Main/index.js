@@ -31,15 +31,13 @@ export default function Menu({ navigation }) {
 
         <View style={styles.input}>
           <TextInput style={{ color: "#242424", marginLeft: 20 }} 
-                    placeholder="Digite seu nome"
+                    placeholder="Usuário ou Email"
                     onChangeText={handleUser} />
         </View>
-
-        {/*
+        
         <View style={styles.input}>
           <TextInput style={{ color: "#242424", marginLeft: 20 }} placeholder="Senha"  />
         </View>
-         */}
 
         <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Menu', {username})}>
           <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}> Entrar </Text>

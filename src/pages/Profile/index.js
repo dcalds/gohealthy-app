@@ -13,11 +13,11 @@ export default function Menu({ navigation }) {
 
             <Image source={{uri: 'https://avatars3.githubusercontent.com/u/31120411?s=460&v=4'}} style={styles.img}></Image>
 
-            <Text style={styles.txtName}>{ username != '' ? username : 'Visitante'}</Text>
-            <Text style={styles.txtClass}>ASPIRANTE</Text>
+            <Text style={styles.txtName}>Danilo Caldas</Text>
+            <Text style={styles.txtClass}>ASPIRANTE</Text>            
 
-            <TouchableOpacity style={styles.btnBack} onPress={() => { navigation.navigate('Menu') }}>
-                <Text style={styles.txtBack}> Voltar </Text>
+            <TouchableOpacity style={styles.btnBack} onPress={() => navigation.navigate('Main')}>
+            <Text style={styles.txtBack}> Sair </Text>
             </TouchableOpacity>
 
         </View>
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     },
     txtName: {
         fontSize: 28,
+        fontWeight: "bold",
         color: "white",
         marginBottom: 5
     },
@@ -51,8 +52,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     txtBack: {
-        fontSize: 16,
-        color: "#ffffff",
+        fontSize: 18,
+        color: "white",
         fontWeight: "bold"
     },
     btnBack: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         width: "85%",
         borderRadius: 4,
         marginTop: 15,
-        backgroundColor: "#00A1D7",
+        backgroundColor: "#EB4949",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
