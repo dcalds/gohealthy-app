@@ -3,10 +3,6 @@ import {
   KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, ImageBackground, StatusBar, TouchableOpacity, TextInput, ScrollView
 } from 'react-native';
 
-import test from '../../assets/test.png';
-import test2 from '../../assets/test2.png';
-import logo from '../../assets/logo.png';
-
 export default function Menu({ navigation }) {
 
   const username = navigation.getParam('username')

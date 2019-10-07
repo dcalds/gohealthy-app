@@ -4,4 +4,6 @@ Aplicativo com a finalidade de promover eventos de atividades físicas criados p
 
 > Telas do protótipo criadas com React Native
 
-<img src="https://raw.githubusercontent.com/dcalds/github-api-app/master/src/assets/srcsht.jpg" alt="Image" width="900" text-center>
+Implementado utilizando combinações de navegação (Stack & Tabs) e passagens de parâmetros (com navigation).
+
+<img src="https://raw.githubusercontent.com/dcalds/gohealthy-app/master/src/assets/scrsht.png" alt="Image" width="900" text-center>

@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   TextInput
 } from 'react-native';
+
 import logo from '../../assets/logo.png';
-import google from '../../assets/google.png';
 
 export default function Menu({ navigation }) {
 
