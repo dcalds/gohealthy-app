@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import {
-  KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, ImageBackground, StatusBar, TouchableOpacity, TextInput, ScrollView
-} from 'react-native';
+import { KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+
+
+
 
 export default function Menu({ navigation }) {
 
@@ -11,95 +12,76 @@ export default function Menu({ navigation }) {
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
   const [destaques, setSestaques] = useState(["Passeio no parque", "Corrida pela saúde", "Idosos na ativa", "Pernas pra que te quero", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
 
-  function handleText(novaBusca) {
+  function handleSearch(novaBusca) {
     setBusca(novaBusca)
   }
 
   return (
-      <KeyboardAvoidingView eneabled style={styles.mainContainer}>
+    <KeyboardAvoidingView eneabled style={styles.mainContainer}>
 
-        <StatusBar barStyle="light-content" backgroundColor="#151C48" />
+      <View
+        style={styles.welcome}
+        onPress={() => { navigation.navigate('Profile', { username }) }} >
+        <Text style={styles.txtWelcome}>
+          Olá, {username != '' ? username : 'Visitante'}!
+        </Text>
+      </View>
 
-        <TouchableOpacity onPress={() => {navigation.navigate('Profile', {username})}} style={{height: 40, width: screenWidth, marginTop: 10}}>
-          <Text style={styles.txtName}>Olá, { username != '' ? username : 'Visitante'}!</Text>
-        </TouchableOpacity>
+      <TextInput
+        style={styles.input}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholderTextColor="#999"
+        onChangeText={handleSearch}
+        placeholder="Busque um evento"
+      />
 
-        <View style={styles.input}>
-          <TextInput style={{ color: "#242424", marginLeft: 20 }}
-            onChangeText={handleText}
-            placeholder="Busque um evento" />
-        </View>
+      {/* EVENTOS POR CATEGORIA */}
 
-        {/* EVENTOS POR CATEGORIA */}
+      <View style={styles.categContainer}>
+        <Text style={styles.txtSecondary}> Eventos por categoria </Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {modalidades.map((element, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.categTag}
+                onPress={() => { navigation.navigate('Category', { element }) }}>
+                <Text style={styles.categText}> {element} </Text>
+              </TouchableOpacity>)
+          })}
+        </ScrollView>
 
-        <View style={{ height: 90, width: "100%", marginTop: 20 }}>
+      </View>
 
-          <Text style={styles.txt}> Eventos por categoria </Text>
+      {/* CONFIRA OS PRÓXIMOS EVENTOS */}
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-
-            {
-              modalidades.map((element, index) => {
-
-                return (
-                  <TouchableOpacity key={index} 
-                                    style={styles.imgBkg}
-                                    onPress={() => {navigation.navigate('Category', { element })}}>
-
-                    <Text style={styles.txtCat}> {element} </Text>
-
-                  </TouchableOpacity>)
-
-              })
-            }
-
-          </ScrollView>
-
-        </View>
-
-        {/* EVENTOS PRÓXIMOS */}
-
-        <View style={{ height: 400, width: "100%", marginTop: 5 }}>
-
-          <Text style={styles.txt}> Confira os próximos eventos </Text>
-
-          <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
-
-            {
-              destaques.map((element, index) => {
-                return (
-
-                  <TouchableOpacity key={index} 
-                                    style={styles.rowEvents}
-                                    onPress={() => {navigation.navigate('Event', { element })}}>
-
+      <View style={styles.eventContainer}>
+        <Text style={styles.txtSecondary}> Confira os próximos eventos </Text>
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={true}
+          indicatorStyle="white">
+          {destaques.map((element, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.eventCard}
+                onPress={() => { navigation.navigate('Event', { element }) }}>
+                <View style={{ flexDirection: "row" }}>
+                  <Image style={{ backgroundColor: "skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }} />
+                  <View style={{ marginTop: 8 }}>
+                    <Text style={styles.eventText}> {element} </Text>
                     <View style={{ flexDirection: "row" }}>
-                      <Image
-                        style={{ backgroundColor:"skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }}
-                      />
-
-                      <View style={{ marginTop: 8 }}>
-
-                        <Text style={styles.txtEvt}> {element} </Text>
-
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={styles.txtEvtDet}>Data: 25/25/2025 </Text>
-                          <Text style={styles.txtEvtDet}>Local: Centro </Text>
-                        </View>
-
-                      </View>
+                      <Text style={styles.eventTextSecondary}>Data: 25/25/2025 </Text>
+                      <Text style={styles.eventTextSecondary}>Local: Centro </Text>
                     </View>
+                  </View>
+                </View>
+              </TouchableOpacity>)
+          })}
+        </ScrollView>
 
-                  </TouchableOpacity>
-
-                )
-              })
-            }
-
-          </ScrollView>
-
-        </View>
-      </KeyboardAvoidingView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -112,25 +94,48 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#151C48"
   },
+  welcome: {
+    height: 50,
+    width: screenWidth,
+    marginTop: 10
+  },
+  txtWelcome: {
+    fontSize: 28,
+    color: "white",
+    marginLeft: 20,
+    marginBottom: 5,
+    fontWeight: "bold"
+  },
   input: {
     height: 48,
-    width: "95%",
+    width: "85%",
     borderRadius: 4,
+    marginTop: 6,
     backgroundColor: "#f2f2f8",
     display: "flex",
     justifyContent: "center",
-    marginTop: 10
+    paddingHorizontal: 15
   },
-  btn: {
-    flex: 1,
-    width: screenWidth,
-    backgroundColor: "#00A1D7",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+  txtSecondary: {
+    fontSize: 22,
+    color: "white",
+    marginLeft: 12,
+    marginBottom: 5,
+    fontWeight: "bold"
   },
-  imgBkg: {
-    margin: 8,
+  categContainer: {
+    height: 90,
+    width: "100%",
+    marginTop: 20
+  },
+  categText: {
+    fontSize: 16,
+    color: "white",
+  },
+  categTag: {
+    marginLeft: 20,
+    marginTop: 10,
+    marginBottom: 5,
     height: 45,
     width: 100,
     borderRadius: 4,
@@ -139,44 +144,40 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  rowEvents: {
-    margin: 10,
+  eventContainer: {
+    height: 500,
+    width: "100%",
+    marginTop: 15
+  },
+  eventCard: {
     height: 75,
     borderRadius: 4,
-    width: "95%",
+    width: "85%",
     backgroundColor: "#f2f2f8",
     justifyContent: "center",
+    alignSelf: "center",
+    margin: 12
   },
-  txt: {
-    fontSize: 18,
-    color: "white",
-    marginLeft: 10,
-    marginBottom: 5,
-    fontWeight: "bold"
-  },
-  txtCat: {
-    fontSize: 16,
-    color: "white",
-  },
-  txtEvt: {
+  eventText: {
     fontSize: 20,
     color: "#151C48",
     fontWeight: "bold",
     marginBottom: 10,
     marginLeft: 10
   },
-  txtEvtDet: {
+  eventTextSecondary: {
     fontSize: 12,
     color: "#00A1D7",
     fontWeight: "bold",
     marginBottom: 10,
     marginLeft: 17
   },
-  txtName: {
-    fontSize: 24,
-    color: "white",
-    marginLeft: 10,
-    marginBottom: 5,
-    fontWeight: "bold"
+  btn: {
+    flex: 1,
+    width: screenWidth,
+    backgroundColor: "#00A1D7",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 })

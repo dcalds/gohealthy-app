@@ -81,7 +81,7 @@ const Tabs = createAppContainer(createBottomTabNavigator(
 const Stack = createAppContainer(createStackNavigator(
 
   {
-    // Página de Introdução
+    // Página de Introdução - OK
     Intro: { screen: Intro, navigationOptions: { header: null } },
 
     // Página de Login
@@ -105,7 +105,7 @@ const Stack = createAppContainer(createStackNavigator(
 
   ,
 
-  { initialRouteName: "Intro" }
+  { initialRouteName: "Tabs" }
 
 ));
 
