@@ -17,13 +17,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function MyEvents({ navigation }) {
 
+
     return (
         <View style={styles.mainContainer}>
 
             <Text style={styles.txt}> Meus eventos</Text>
 
             <View style={styles.itemContainer}>
-                <TouchableOpacity style={styles.btn}>                    
+                <TouchableOpacity style={styles.btn} onPress={() => {navigation.navigate('CreateEvent')}}>                    
                     <Icon name="add-circle" size={20} color="white" style={{marginRight: 5}}/>
                     <Text style={styles.txtBtn}>
                         Criar Evento
