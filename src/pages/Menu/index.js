@@ -1,30 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
 export default function Menu({ navigation }) {
 
-  const username = navigation.getParam('username')
+  // Vem de Criar Evento
+  const nomeEvento = navigation.getParam('username')
+  
+  // Vem de Login
+  const username = "Danilo"
+  // const nomeEvento = navigation.getParam('nome')
 
   const [busca, setBusca] = useState(null)
+  const [reloadPage, setReloadPage ] = useState(1)
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setSestaques] = useState(["Passeio no parque", "Corrida pela saúde", "Idosos na ativa", "Pernas pra que te quero", "Pelada dos Primos do Maiobão", "Caminhada da Primeira Idade"])
+  const [destaques, setDestaques] = useState([])
 
-  function handleSearch(novaBusca) {
-    setBusca(novaBusca)
+  useEffect(()=>{
+    getData()
+  },[reloadPage])
+
+  getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@eventDataKey')
+      if(value !== null) {
+        EventData = JSON.parse(value)
+      }
+      setDestaques([...destaques, EventData])
+    } catch(e) {
+      // return
+    }
   }
+
+  // addEvent = (evento) => setDestaques([...destaques, evento])
+
+  handleSearch = (novaBusca) => setBusca(novaBusca)
 
   return (
     <KeyboardAvoidingView eneabled style={styles.mainContainer}>
 
-      <View
-        style={styles.welcome}
-        onPress={() => { navigation.navigate('Profile', { username }) }} >
+      <View style={styles.welcome}>
         <Text style={styles.txtWelcome}>
           Olá, {username != '' ? username : 'Visitante'}!
         </Text>
+        <TouchableOpacity onPress={() => {setReloadPage(reloadPage + 1)}} style={{marginRight: 20,alignSelf: "center"}}>
+          <Icon name="refresh" size={30} color="white" />
+        </TouchableOpacity>
       </View>
 
       <TextInput
@@ -34,7 +58,9 @@ export default function Menu({ navigation }) {
         placeholderTextColor="#999"
         onChangeText={handleSearch}
         placeholder="Busque um evento"
+        editable={false}
       />
+
 
       {/* EVENTOS POR CATEGORIA */}
 
@@ -43,9 +69,7 @@ export default function Menu({ navigation }) {
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {modalidades.map((element, index) => {
             return (
-              <TouchableOpacity
-                key={index}
-                style={styles.categTag}
+              <TouchableOpacity key={index} style={styles.categTag}
                 onPress={() => { navigation.navigate('Category', { element }) }}>
                 <Text style={styles.categText}> {element} </Text>
               </TouchableOpacity>)
@@ -54,30 +78,32 @@ export default function Menu({ navigation }) {
 
       </View>
 
+
       {/* CONFIRA OS PRÓXIMOS EVENTOS */}
 
       <View style={styles.eventContainer}>
         <Text style={styles.txtSecondary}> Confira os próximos eventos </Text>
-        <ScrollView horizontal={false} showsHorizontalScrollIndicator={true}
-          indicatorStyle="white">
-          {destaques.map((element, index) => {
-            return (
-              <TouchableOpacity
-                key={index}
-                style={styles.eventCard}
-                onPress={() => { navigation.navigate('Event', { element }) }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Image style={{ backgroundColor: "skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }} />
-                  <View style={{ marginTop: 8 }}>
-                    <Text style={styles.eventText}> {element} </Text>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={styles.eventTextSecondary}>Data: 25/25/2025 </Text>
-                      <Text style={styles.eventTextSecondary}>Local: Centro </Text>
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
+          {destaques[0] != null ?
+             Object.keys(destaques).map((element, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.eventCard}
+                  onPress={() => { navigation.navigate('Event', { /**/ }) }}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Image style={{ backgroundColor: "skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }} />
+                    <View style={{ marginTop: 8 }}>
+                      <Text style={styles.eventText}> { destaques[element].nome } </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.eventTextSecondary}>Data: {destaques[element].data} </Text>
+                        <Text style={styles.eventTextSecondary}>Local: {destaques[element].local} </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>)
-          })}
+                </TouchableOpacity>)
+            })
+            : <Text style={styles.txtNoEvents}> Sem eventos Recentes :( </Text>}
         </ScrollView>
 
       </View>
@@ -97,7 +123,9 @@ const styles = StyleSheet.create({
   welcome: {
     height: 50,
     width: screenWidth,
-    marginTop: 10
+    marginTop: 10,
+    flexDirection:"row",
+    justifyContent: "space-between"
   },
   txtWelcome: {
     fontSize: 28,
@@ -133,7 +161,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   categTag: {
-    marginLeft: 20,
+    marginLeft: 15,
     marginTop: 10,
     marginBottom: 5,
     height: 45,
@@ -145,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   eventContainer: {
-    height: 500,
+    height: 300,
     width: "100%",
     marginTop: 15
   },
@@ -179,5 +207,12 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
+  },
+  txtNoEvents: {
+    fontSize: 14,
+    color: "#f2f2f8",
+    fontWeight: "bold",
+    alignSelf: "center",
+    marginTop: 25
   }
 })

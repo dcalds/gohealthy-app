@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Image, StyleSheet, StatusBar, TouchableOpacity, TextInput } from 'react-native';
-import logoGoHealthy from '../../assets/logo.png';
+import logoGoHealthy from '../../assets/logo3.png';
 
 
 

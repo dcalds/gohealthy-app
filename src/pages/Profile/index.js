@@ -13,8 +13,7 @@ export default function Menu({ navigation }) {
 
             <Image source={{uri: 'https://avatars3.githubusercontent.com/u/31120411?s=460&v=4'}} style={styles.img}></Image>
 
-            <Text style={styles.txtName}>Danilo Caldas</Text>
-            <Text style={styles.txtClass}>ASPIRANTE</Text>            
+            <Text style={styles.txtName}>Danilo Caldas</Text>      
 
             <TouchableOpacity style={styles.btnBack} onPress={() => navigation.navigate('Main')}>
             <Text style={styles.txtBack}> Sair </Text>
@@ -45,11 +44,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
         marginBottom: 5
-    },
-    txtClass: {
-        fontSize: 20,
-        color: "skyblue",
-        fontWeight: "bold"
     },
     txtBack: {
         fontSize: 18,

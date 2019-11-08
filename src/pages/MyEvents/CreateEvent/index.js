@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import {
-    KeyboardAvoidingView,
-    Text,
-    View,
-    Image,
-    StyleSheet,
-    Dimensions,
-    ImageBackground,
-    StatusBar,
-    TouchableOpacity,
-    TextInput,
-    ScrollView,
-    Picker
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, TextInput, Picker } from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
+
+
 
 export default function MyEvents({ navigation }) {
 
@@ -24,17 +14,31 @@ export default function MyEvents({ navigation }) {
     const [dataEvento, setDataEvento] = useState()
     const [horaEvento, setHoraEvento] = useState()
 
+    storeData = async () => {
+
+        EventData = {
+                nome: nomeEvento,
+                local: localEvento,
+                publico: publicoEvento,
+                data: dataEvento,
+                hora: horaEvento
+            }
+
+        try {
+          await AsyncStorage.setItem('@eventDataKey', JSON.stringify(EventData))
+          alert("Evento criado!")
+          navigation.navigate('MyEvents')
+        } catch (e) {
+          alert(e)
+        }
+    }
 
     // Date Time Picker
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false)
 
-    const showDateTimePicker = () => {
-        setIsDateTimePickerVisible(true)
-    }
+    const showDateTimePicker = () => setIsDateTimePickerVisible(true)
 
-    const hideDateTimePicker = () => {
-        setIsDateTimePickerVisible(false)
-    }
+    const hideDateTimePicker = () => setIsDateTimePickerVisible(false)
 
     const handleDatePicked = dateTime => {
         date = JSON.stringify(dateTime).slice(1,11)
@@ -78,14 +82,14 @@ export default function MyEvents({ navigation }) {
                     onValueChange={(newValue, itemIndex) => setPublicoEvento(newValue)}>
 
                     <Picker.Item label="Crianças (até 12 anos)" value="crianca" key="0"/>
-                    <Picker.Item label="Adolescentes (entre 13 e 17 anos)" value="adolesc" key="1"/>
-                    <Picker.Item label="Adultos (entre 18 até 49 anos)" value="adulto" key="2"/>
-                    <Picker.Item label="Idosos (de 50 anos ou mais) " value="idoso" key="3"/>
+                    <Picker.Item label="Adolescentes (entre 13 e 17 anos)" value="adolescentes" key="1"/>
+                    <Picker.Item label="Adultos (entre 18 até 49 anos)" value="adultos" key="2"/>
+                    <Picker.Item label="Idosos (de 50 anos ou mais) " value="idosos" key="3"/>
                 </Picker>
             </View>               
             
             <TouchableOpacity style={styles.pickerBg} onPress={showDateTimePicker}>
-                <Text>Aperte aqui para selecionar uma data e horário</Text>
+                {dataEvento != null? <Text>Data: {dataEvento} // Hora: {horaEvento}</Text>:<Text>Aperte aqui para selecionar uma data e horário</Text>}
             </TouchableOpacity>
 
             <DateTimePicker
@@ -97,13 +101,7 @@ export default function MyEvents({ navigation }) {
                 datePickerModeAndroid="spinner"
             />
 
-            <TouchableOpacity style={styles.btn} onPress={() => {navigation.navigate('MyEvents',{
-                nome: nomeEvento,
-                local: localEvento,
-                publico: publicoEvento,
-                data: dataEvento,
-                hora: horaEvento
-            })}}>                    
+            <TouchableOpacity style={styles.btn} onPress={storeData}>                    
                 <Icon name="check" size={20} color="white" style={{marginRight: 5}}/>
                 <Text style={styles.txtBtn}>
                     Criar
@@ -132,6 +130,7 @@ const styles = StyleSheet.create({
     boxTxt: {
         height: 46,
         width: "88%",
+        marginBottom: 15,
     },
 
     // Seletor de Público
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     txtSecond: {
-        fontSize: 18,
+        fontSize: 28,
         color: "white",
         marginLeft: 5,
         marginTop: 10,
@@ -183,3 +182,5 @@ const styles = StyleSheet.create({
         marginTop: 10
     }
 })
+
+// () => {navigation.navigate('Menu', )}

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     txtScreen: {
-        fontSize: 18,
+        fontSize: 22,
         color: "white"
     },
     btnInvisible: {
