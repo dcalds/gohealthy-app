@@ -8,13 +8,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // PÁRGINAS
 
-import Main from '~/pages/Main';
-import Menu from '~/pages/Menu';
 import Intro from '~/pages/Intro';
+import Main from '~/pages/Main';
+import Register from '~/pages/Register';
+import Menu from '~/pages/Menu';
+import MyEvents from '~/pages/MyEvents';
 import Profile from '~/pages/Profile';
 import Category from '~/pages/Category';
 import Event from '~/pages/Event';
-import MyEvents from '~/pages/MyEvents';
 import CreateEvent from '~/pages/MyEvents/CreateEvent';
 
 // BOTTOM TAB NAVIGATOR
@@ -88,7 +89,7 @@ const Stack = createAppContainer(createStackNavigator(
     Main: { screen: Main, navigationOptions: { header: null } },
 
     // Página de Cadastro
-    // 
+    Register: { screen: Register, navigationOptions: { header: null } },
 
     // Abas da aplicação
     Tabs: { screen: Tabs, navigationOptions: { header: null } },

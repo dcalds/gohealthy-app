@@ -53,7 +53,7 @@ export default function Menu({ navigation }) {
 
       <View style={styles.createAccountLabel}>
         <Text style={styles.createAccountText}> Ainda não tem uma conta? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Menu', { username })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text style={styles.createAccountButton}> Cadastre-se aqui. </Text>
         </TouchableOpacity>
       </View>
