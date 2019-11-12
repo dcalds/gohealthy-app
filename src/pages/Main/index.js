@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, StatusBar, TouchableOpacity, TextInput } from 'react-native';
 import logoGoHealthy from '../../assets/logo3.png';
-
-
-
 
 export default function Menu({ navigation }) {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  function handleUser(novoNome) {
-    setUsername(novoNome)
-  }
+  useEffect(() => {
+    getData()
+  }, [])
 
-  function handlePass(novaSenha) {
-    setPassword(novaSenha)
+  getData = async () => {
+    try {
+      // something
+    } catch (e) {
+      alert(e)
+    }
   }
 
   return (
@@ -29,7 +30,8 @@ export default function Menu({ navigation }) {
         autoCorrect={false}
         placeholderTextColor="#999"
         placeholder="Usuário ou Email"
-        onChangeText={handleUser}
+        value={username}
+        onChangeText={value => setUsername(value)}
       />
 
       <TextInput
@@ -38,7 +40,9 @@ export default function Menu({ navigation }) {
         autoCorrect={false}
         placeholderTextColor="#999"
         placeholder="Senha"
-        onChangeText={handlePass}
+        secureTextEntry={true}
+        value={password}
+        onChangeText={value => setPassword(value)}
       />
 
       <TouchableOpacity

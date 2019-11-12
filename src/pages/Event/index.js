@@ -5,44 +5,32 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Event({ navigation }) {
 
-    const element = navigation.getParam('element')
-
     useEffect(() => {
         getData()
     }, [])
 
     getData = async () => {
         try {
-            const value = await AsyncStorage.getItem('@eventDataKey')
-            if (value !== null) {
-                EventData = JSON.parse(value)
-            }
+            // something
         } catch (e) {
-            //
+            alert(e)
         }
     }
 
     removeData = async () => {
         try {
-            await AsyncStorage.removeItem('@eventDataKey')
-            navigation.navigate('Menu')
             alert("Evento Deletado")
+            navigation.navigate("Menu")
         }
         catch (e) {
-            alert(e);
+            alert(e)
         }
     }
 
     return (
         <View style={styles.mainContainer}>
 
-            <Text style={styles.txtTitle}>{EventData[0]}</Text>
-            <Text style={styles.txtTitle}>{EventData[1]}</Text>
-            <Text style={styles.txtTitle}>{EventData[2]}</Text>
-            <Text style={styles.txtTitle}>{EventData[3]}</Text>
-            <Text style={styles.txtTitle}>{EventData[4]}</Text>
-
-
+            <Text style={styles.txtTitle}>Informações</Text>
 
             <TouchableOpacity style={styles.btn} onPress={removeData}>
                 <Icon name="check" size={20} color="white" style={{ alignSelf: "center" }} />
@@ -71,7 +59,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "white",
         fontWeight: "bold",
-        alignSelf:"center"
+        alignSelf: "center"
     },
     btn: {
         height: 50,
@@ -81,6 +69,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignSelf:"center"
+        alignSelf: "center"
     }
 })

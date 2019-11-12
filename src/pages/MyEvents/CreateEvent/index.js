@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, TextInput, Picker } from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-
-
 
 export default function MyEvents({ navigation }) {
 
@@ -13,40 +11,37 @@ export default function MyEvents({ navigation }) {
     const [publicoEvento, setPublicoEvento] = useState()
     const [dataEvento, setDataEvento] = useState()
     const [horaEvento, setHoraEvento] = useState()
+    
+  useEffect(() => {
+    getData()
+  }, [])
 
-    storeData = async () => {
-
-        EventData = {
-                nome: nomeEvento,
-                local: localEvento,
-                publico: publicoEvento,
-                data: dataEvento,
-                hora: horaEvento
-            }
-
-        try {
-          await AsyncStorage.setItem('@eventDataKey', JSON.stringify(EventData))
-          alert("Evento criado!")
-          navigation.navigate('MyEvents')
-        } catch (e) {
-          alert(e)
-        }
+  getData = async () => {
+    try {
+      // something
+    } catch (e) {
+      alert(e)
     }
+  }
+
+  storeData = async () => {
+    try {
+      alert("Evento Criado!")
+      navigation.navigate("MyEvents")
+    } catch (e) {
+      alert(e)
+    }
+  }
 
     // Date Time Picker
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false)
-
-    const showDateTimePicker = () => setIsDateTimePickerVisible(true)
-
-    const hideDateTimePicker = () => setIsDateTimePickerVisible(false)
-
-    const handleDatePicked = dateTime => {
+    showDateTimePicker = () => setIsDateTimePickerVisible(true)
+    hideDateTimePicker = () => setIsDateTimePickerVisible(false)
+    handleDatePicked = dateTime => {
         date = JSON.stringify(dateTime).slice(1,11)
         time = JSON.stringify(dateTime).slice(12,20)
-        
         setDataEvento(date)
         setHoraEvento(time)
-
         hideDateTimePicker();
     }
 
@@ -55,7 +50,7 @@ export default function MyEvents({ navigation }) {
 
             <View style={styles.boxTxt}>
                 <Text style={styles.txtSecond}> 
-                    Detalhes do evento
+                    Detalhes do Evento
                 </Text>
             </View>
 
@@ -132,8 +127,6 @@ const styles = StyleSheet.create({
         width: "88%",
         marginBottom: 15,
     },
-
-    // Seletor de Público
     picker: {
         height: 50, 
         width: "85%"
@@ -147,8 +140,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4
     },
-
-    // Textos
     txt: {
         fontSize: 24,
         color: "white",
@@ -163,8 +154,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontWeight: "bold"
     },
-
-    // Botão
     txtBtn: {
         fontSize: 18,
         color: "white",
@@ -182,5 +171,3 @@ const styles = StyleSheet.create({
         marginTop: 10
     }
 })
-
-// () => {navigation.navigate('Menu', )}

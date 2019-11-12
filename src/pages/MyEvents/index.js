@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-
-
-
 export default function MyEvents({ navigation }) {
 
-    const nomeEvento = navigation.getParam('nome')
-    const localEvento = navigation.getParam('local')
-    const publicoEvento = navigation.getParam('publico')
-    const dataEvento = navigation.getParam('data')
-    const horaEvento = navigation.getParam('hora')
+    useEffect(() => {
+        getData()
+    }, [])
+
+    getData = async () => {
+        try {
+            // something
+        } catch (e) {
+            alert(e)
+        }
+    }
 
     return (
         <View style={styles.mainContainer}>
@@ -27,7 +30,7 @@ export default function MyEvents({ navigation }) {
                         Criar Evento
                     </Text>
                 </TouchableOpacity>
-            </View>            
+            </View>
 
         </View>
     );

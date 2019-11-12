@@ -3,50 +3,33 @@ import { KeyboardAvoidingView, Text, View, Image, StyleSheet, Dimensions, Status
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-
-
 export default function Menu({ navigation }) {
 
-  // Vem de Criar Evento
-  const nomeEvento = navigation.getParam('username')
-  
-  // Vem de Login
-  const username = "Danilo"
-  // const nomeEvento = navigation.getParam('nome')
-
-  const [busca, setBusca] = useState(null)
-  const [reloadPage, setReloadPage ] = useState(1)
+  const [busca, setBusca] = useState(null) // Campo da busca
+  const [reloadPage, setReloadPage] = useState(1) // Campo para Reload de Página
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setDestaques] = useState([])
+  const [destaques, setDestaques] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4", "Evento 5"])
 
-  useEffect(()=>{
+  useEffect(() => {
     getData()
-  },[reloadPage])
+  }, [reloadPage])
 
   getData = async () => {
     try {
-      const value = await AsyncStorage.getItem('@eventDataKey')
-      if(value !== null) {
-        EventData = JSON.parse(value)
-      }
-      setDestaques([...destaques, EventData])
-    } catch(e) {
-      // return
+      // something
+    } catch (e) {
+      alert(e)
     }
   }
-
-  // addEvent = (evento) => setDestaques([...destaques, evento])
-
-  handleSearch = (novaBusca) => setBusca(novaBusca)
 
   return (
     <KeyboardAvoidingView eneabled style={styles.mainContainer}>
 
       <View style={styles.welcome}>
         <Text style={styles.txtWelcome}>
-          Olá, {username != '' ? username : 'Visitante'}!
+          Olá, Danilo!
         </Text>
-        <TouchableOpacity onPress={() => {setReloadPage(reloadPage + 1)}} style={{marginRight: 20,alignSelf: "center"}}>
+        <TouchableOpacity onPress={() => { setReloadPage(reloadPage + 1) }} style={{ marginRight: 20, alignSelf: "center" }}>
           <Icon name="refresh" size={30} color="white" />
         </TouchableOpacity>
       </View>
@@ -56,9 +39,10 @@ export default function Menu({ navigation }) {
         autoCapitalize="none"
         autoCorrect={false}
         placeholderTextColor="#999"
-        onChangeText={handleSearch}
+        value={busca}
+        onChangeText={value => setBusca(value)}
         placeholder="Busque um evento"
-        editable={false}
+        editable={true}
       />
 
 
@@ -85,19 +69,19 @@ export default function Menu({ navigation }) {
         <Text style={styles.txtSecondary}> Confira os próximos eventos </Text>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false}>
           {destaques[0] != null ?
-             Object.keys(destaques).map((element, index) => {
+            destaques.map((e, i) => {
               return (
                 <TouchableOpacity
-                  key={index}
+                  key={i}
                   style={styles.eventCard}
                   onPress={() => { navigation.navigate('Event', { /**/ }) }}>
                   <View style={{ flexDirection: "row" }}>
-                    <Image style={{ backgroundColor: "skyblue", height: 75, width: 75, marginLeft: 0, borderRadius: 4 }} />
+                    <Image style={styles.eventIsOnIndicator} />
                     <View style={{ marginTop: 8 }}>
-                      <Text style={styles.eventText}> { destaques[element].nome } </Text>
+                      <Text style={styles.eventText}> {e} </Text>
                       <View style={{ flexDirection: "row" }}>
-                        <Text style={styles.eventTextSecondary}>Data: {destaques[element].data} </Text>
-                        <Text style={styles.eventTextSecondary}>Local: {destaques[element].local} </Text>
+                        <Text style={styles.eventTextSecondary}>Data: 10/10/2010 </Text>
+                        <Text style={styles.eventTextSecondary}>Local: Maiobão </Text>
                       </View>
                     </View>
                   </View>
@@ -124,7 +108,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: screenWidth,
     marginTop: 10,
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "space-between"
   },
   txtWelcome: {
@@ -186,6 +170,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 12
   },
+  eventIsOnIndicator: { 
+    backgroundColor: "skyblue", 
+    height: 50, 
+    width: 50, 
+    marginLeft: 15, 
+    borderRadius: 50,
+    alignSelf: "center"
+   },
   eventText: {
     fontSize: 20,
     color: "#151C48",
@@ -198,7 +190,7 @@ const styles = StyleSheet.create({
     color: "#00A1D7",
     fontWeight: "bold",
     marginBottom: 10,
-    marginLeft: 17
+    marginLeft: 15
   },
   btn: {
     flex: 1,
