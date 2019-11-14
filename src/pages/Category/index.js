@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     txtTitle: {
         fontSize: 24,
         color: "white",
-        marginLeft: 10,
-        marginBottom: 5,
+        margin: 15,
         fontWeight: "bold"
     }
 })

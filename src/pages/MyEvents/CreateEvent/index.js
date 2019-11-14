@@ -76,10 +76,11 @@ export default function MyEvents({ navigation }) {
                     selectedValue={publicoEvento}  
                     onValueChange={(newValue, itemIndex) => setPublicoEvento(newValue)}>
 
-                    <Picker.Item label="Crianças (até 12 anos)" value="crianca" key="0"/>
+                    <Picker.Item label="Crianças (até 12 anos)" value="criancas" key="0"/>
                     <Picker.Item label="Adolescentes (entre 13 e 17 anos)" value="adolescentes" key="1"/>
                     <Picker.Item label="Adultos (entre 18 até 49 anos)" value="adultos" key="2"/>
                     <Picker.Item label="Idosos (de 50 anos ou mais) " value="idosos" key="3"/>
+                    <Picker.Item label="Livre (todas as idades) " value="livre" key="3"/>
                 </Picker>
             </View>               
             
@@ -168,6 +169,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 10
+        marginTop: 30
     }
 })

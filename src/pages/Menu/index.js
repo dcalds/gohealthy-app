@@ -8,7 +8,7 @@ export default function Menu({ navigation }) {
   const [busca, setBusca] = useState(null) // Campo da busca
   const [reloadPage, setReloadPage] = useState(1) // Campo para Reload de Página
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
-  const [destaques, setDestaques] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4", "Evento 5"])
+  const [destaques, setDestaques] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4", "Evento 5", "Evento 6", "Evento 7", "Evento 8"])
 
   useEffect(() => {
     getData()
@@ -74,7 +74,7 @@ export default function Menu({ navigation }) {
                 <TouchableOpacity
                   key={i}
                   style={styles.eventCard}
-                  onPress={() => { navigation.navigate('Event', { /**/ }) }}>
+                  onPress={() => { navigation.navigate('Event', { e }) }}>
                   <View style={{ flexDirection: "row" }}>
                     <Image style={styles.eventIsOnIndicator} />
                     <View style={{ marginTop: 8 }}>
@@ -89,8 +89,8 @@ export default function Menu({ navigation }) {
             })
             : <Text style={styles.txtNoEvents}> Sem eventos Recentes :( </Text>}
         </ScrollView>
-
       </View>
+
     </KeyboardAvoidingView>
   );
 }
@@ -157,9 +157,9 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   eventContainer: {
-    height: 300,
+    height: screenHeight-300,
     width: "100%",
-    marginTop: 15
+    marginTop: 15,
   },
   eventCard: {
     height: 75,
@@ -170,14 +170,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 12
   },
-  eventIsOnIndicator: { 
-    backgroundColor: "skyblue", 
-    height: 50, 
-    width: 50, 
-    marginLeft: 15, 
+  eventIsOnIndicator: {
+    backgroundColor: "skyblue",
+    height: 50,
+    width: 50,
+    marginLeft: 15,
     borderRadius: 50,
     alignSelf: "center"
-   },
+  },
   eventText: {
     fontSize: 20,
     color: "#151C48",
