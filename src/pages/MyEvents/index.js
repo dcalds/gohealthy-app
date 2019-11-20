@@ -4,8 +4,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function MyEvents({ navigation }) {
 
-    const [create, setCreate] = useState([1,2,3,4,5])
-    const [participante, setParticipante] = useState([1,2,3,4,5])
+    const [create, setCreate] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4"])
+    const [participante, setParticipante] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4"])
+
+    const [eventData, setEventData] = useState()
 
     useEffect(() => {
         getData()
@@ -29,14 +31,18 @@ export default function MyEvents({ navigation }) {
             <View>
                 <Text style={styles.txtMyEventsSecondary}> Criados </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
-                    {create.map((e,i) => <View key={i} style={styles.evetCard}></View>)}
+                    {create.map((e,i) => <TouchableOpacity key={i} style={styles.evetCard}>
+                        <Text style={styles.nameEventCard}>{e}</Text>
+                    </TouchableOpacity>)}
                 </ScrollView>
             </View>
 
             <View>
                 <Text style={styles.txtMyEventsSecondary}> Participando </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
-                    {participante.map((e,i) => <View key={i} style={styles.partCard}></View>)}
+                    {participante.map((e,i) => <TouchableOpacity key={i} style={styles.partCard}>
+                        <Text style={styles.namePartCard}>{e}</Text>
+                    </TouchableOpacity>)}
                 </ScrollView>
             </View>
 
@@ -84,17 +90,31 @@ const styles = StyleSheet.create({
     },
     evetCard: {
         height: 90,
-        width: 90,
-        margin: 15,
+        width: 150,
+        marginLeft: 20,
+        marginTop: 15,
+        marginBottom: 15,
         backgroundColor: "skyblue",
         borderRadius: 4
     },
     partCard: {
         height: 90,
-        width: 90,
-        margin: 15,
+        width: 150,
+        marginLeft: 20,
+        marginTop: 15,
+        marginBottom: 15,
         backgroundColor: "white",
         borderRadius: 4
+    },
+    nameEventCard: {
+        margin: 9,
+        fontSize:   14,
+        color: "#151C48"
+    },
+    namePartCard: {
+        margin: 9,
+        fontSize:   14,
+        color: "#151C48"
     },
     btnCreateEventLabel: {
         justifyContent: "center",
