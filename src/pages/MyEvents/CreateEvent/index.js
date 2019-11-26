@@ -4,6 +4,8 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import api from '../../../services/api'
+
 export default function MyEvents({ navigation }) {
 
     const [nomeEvento, setNomeEvento] = useState()
@@ -12,26 +14,25 @@ export default function MyEvents({ navigation }) {
     const [dataEvento, setDataEvento] = useState()
     const [horaEvento, setHoraEvento] = useState()
     
-  useEffect(() => {
-    getData()
-  }, [])
+    storeData = async () => {
+        try {
 
-  getData = async () => {
-    try {
-      // something
-    } catch (e) {
-      alert(e)
-    }
-  }
+            await api.post('/eventos', {
+                "nome": nomeEvento,
+                "lugar": localEvento,
+                "dataHoraInicio": "22/12/2019 23:20",
+                "duracao": "24",
+                "categoria": "Corrida",
+                "status": true
+              })
 
-  storeData = async () => {
-    try {
-      alert("Evento Criado!")
-      navigation.navigate("MyEvents")
-    } catch (e) {
-      alert(e)
+            alert(`O evento, ${ nomeEvento } foi criado!`)
+            navigation.navigate("MyEvents")
+
+        } catch (e) {
+        alert(e)
+        }
     }
-  }
 
     // Date Time Picker
     const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false)

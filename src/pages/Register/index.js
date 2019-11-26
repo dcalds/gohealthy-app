@@ -2,19 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet, StatusBar, TouchableOpacity, TextInput } from 'react-native';
 import logoGoHealthy from '../../assets/logo3.png';
 
+import api from '../../services/api'
+
 export default function Menu({ navigation }) {
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  useEffect(() => {
-    getData()
-  }, [])
-
-  getData = async () => {
+  setData = async () => {
     try {
-      // something
+
+      await api.post('/aspirantes', {
+        "nome": username,
+        "email": email,
+        "numero": "98982024211",
+        "senha": password,
+        "idade": 99
+      })
+      alert(`Olá, ${username}!`)
+      navigation.navigate('Menu')
+
     } catch (e) {
       alert(e)
     }
@@ -60,7 +68,7 @@ export default function Menu({ navigation }) {
 
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => navigation.navigate('Menu')}>
+        onPress={setData}>
         <Text style={styles.txtBtn}> Vamos Lá! </Text>
       </TouchableOpacity>
 

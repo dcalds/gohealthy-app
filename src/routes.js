@@ -61,7 +61,7 @@ const Tabs = createAppContainer(createBottomTabNavigator(
   ,
 
   {
-    initialRouteName: "MyEvents",
+    initialRouteName: "Menu",
     tabBarOptions: {
       activeTintColor: 'white',
       inactiveTintColor: 'skyblue',

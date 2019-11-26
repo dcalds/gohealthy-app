@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     txtMyEventsSecondary:{
-        fontSize: 18,
+        fontSize: 20,
         color: "white",
         marginLeft: 30,
         marginBottom: 5,
@@ -107,13 +107,15 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     nameEventCard: {
-        margin: 9,
-        fontSize:   14,
+        marginTop: 10,
+        marginLeft: 15,
+        fontSize:   16,
         color: "#151C48"
     },
     namePartCard: {
-        margin: 9,
-        fontSize:   14,
+        marginTop: 10,
+        marginLeft: 15,
+        fontSize:   16,
         color: "#151C48"
     },
     btnCreateEventLabel: {
