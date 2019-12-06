@@ -7,6 +7,8 @@ import api from '../../services/api'
 
 export default function Menu({ navigation }) {
 
+  const eventViewer = navigation.getParam('aspirante')
+
   const [busca, setBusca] = useState(null) // Campo da busca
   const [reloadPage, setReloadPage] = useState(1) // Campo para Reload de Página
   const [modalidades, setModalidades] = useState(["Corrida", "Caminhada", "Futebol", "Aeróbico", "Academia"])
@@ -33,7 +35,7 @@ export default function Menu({ navigation }) {
 
       <View style={styles.welcome}>
         <Text style={styles.txtWelcome}>
-          Olá, Danilo!
+          Olá, Danilo Caldas!
         </Text>
         <TouchableOpacity onPress={() => { setReloadPage(reloadPage + 1) }} style={{ marginRight: 20, alignSelf: "center" }}>
           <Icon name="refresh" size={30} color="white" />
@@ -80,7 +82,7 @@ export default function Menu({ navigation }) {
                 <TouchableOpacity
                   key={i}
                   style={styles.eventCard}
-                  onPress={() => { navigation.navigate('Event', {e})}}>
+                  onPress={() => { navigation.navigate('Event', { e, eventViewer })}}>
                   <View style={{ flexDirection: "row" }}>
                     <Image style={styles.eventIsOnIndicator} />
                     <View style={{ marginTop: 8 }}>

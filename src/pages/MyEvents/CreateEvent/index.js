@@ -3,16 +3,19 @@ import { Text, View, StyleSheet, TouchableOpacity, TextInput, Picker } from 'rea
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
+import ImagePicker from 'react-native-image-picker';
 
 import api from '../../../services/api'
+import { Image } from 'react-native-animatable';
 
 export default function MyEvents({ navigation }) {
 
     const [nomeEvento, setNomeEvento] = useState()
     const [localEvento, setLocalEvento] = useState()
-    const [publicoEvento, setPublicoEvento] = useState()
+    const [tipoEvento, setTipoEvento] = useState("Corrida")
     const [dataEvento, setDataEvento] = useState()
     const [horaEvento, setHoraEvento] = useState()
+    const [foto, setFoto] = useState(null)
     
     storeData = async () => {
         try {
@@ -20,9 +23,9 @@ export default function MyEvents({ navigation }) {
             await api.post('/eventos', {
                 "nome": nomeEvento,
                 "lugar": localEvento,
-                "dataHoraInicio": "22/12/2019 23:20",
+                "dataHoraInicio": `${dataEvento.slice(8,10)}/${dataEvento.slice(5,7)}/${dataEvento.slice(0,4)} ${horaEvento.slice(0,2)}:${horaEvento.slice(3,5)}`,
                 "duracao": "24",
-                "categoria": "Corrida",
+                "categoria": tipoEvento,
                 "status": true
               })
 
@@ -32,6 +35,27 @@ export default function MyEvents({ navigation }) {
         } catch (e) {
         alert(e)
         }
+    }
+
+    var options = {
+        noData: true
+     };
+
+    handlePhoto = () => {        
+         ImagePicker.showImagePicker(options, response => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+              alert(response.customButton);
+            } else {
+                const source = response.uri
+                setFoto(source)
+            }
+         });          
     }
 
     // Date Time Picker
@@ -74,17 +98,21 @@ export default function MyEvents({ navigation }) {
             <View style={styles.pickerBg}>
                 <Picker
                     style={styles.picker}
-                    selectedValue={publicoEvento}  
-                    onValueChange={(newValue, itemIndex) => setPublicoEvento(newValue)}>
+                    selectedValue={tipoEvento}  
+                    onValueChange={(newValue, itemIndex) => setTipoEvento(newValue)}>
 
-                    <Picker.Item label="Crianças (até 12 anos)" value="criancas" key="0"/>
-                    <Picker.Item label="Adolescentes (entre 13 e 17 anos)" value="adolescentes" key="1"/>
-                    <Picker.Item label="Adultos (entre 18 até 49 anos)" value="adultos" key="2"/>
-                    <Picker.Item label="Idosos (de 50 anos ou mais) " value="idosos" key="3"/>
-                    <Picker.Item label="Livre (todas as idades) " value="livre" key="3"/>
+                    <Picker.Item label="Corrida" value="Corrida" key="0"/>
+                    <Picker.Item label="Futebol" value="Futebol" key="1"/>
+                    <Picker.Item label="Academia" value="Academia" key="2"/>
+                    <Picker.Item label="Aeróbico" value="Aeróbico" key="3"/>
+                    <Picker.Item label="Caminhada" value="Caminhada" key="4"/>
                 </Picker>
             </View>               
             
+            <TouchableOpacity style={styles.uploadPhoto} onPress={handlePhoto}>
+                <Text> Escolha uma foto </Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.pickerBg} onPress={showDateTimePicker}>
                 {dataEvento != null? <Text>Data: {dataEvento} // Hora: {horaEvento}</Text>:<Text>Aperte aqui para selecionar uma data e horário</Text>}
             </TouchableOpacity>
@@ -137,6 +165,15 @@ const styles = StyleSheet.create({
         height: 50,
         width: "85%",
         backgroundColor: "white",
+        marginTop: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 4
+    },
+    uploadPhoto: {
+        height: 50,
+        width: "85%",
+        backgroundColor: "#A6A6FF",
         marginTop: 10,
         justifyContent: "center",
         alignItems: "center",

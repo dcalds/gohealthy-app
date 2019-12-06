@@ -4,34 +4,35 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { white } from 'ansi-colors';
 
+import api from '../../services/api'
+
 export default function Event({ navigation }) {
 
     const eventData = navigation.getParam('e')
+    const eventViewer = navigation.getParam('eventViewer')
 
     const [eventStatus, setEventStatus] = useState(eventData.status)
-
-    // const participantesLista = eventData.participantesEvento
-    const participantesLista = ['lulu', 'lala', 'haha', 'mumu', 'lulu', 'lala', 'haha', 'mumu']
+    const [eventViewerIsOn, setEventViewerIsOn] = useState(false)
+    const [participantesLista, setParticipantesLista] = useState(eventData.participantesEvento)
 
     const dataHora = eventData.dataHoraInicio
 
     useEffect(() => {
-        getData()
-    }, [])
-
-    getData = async () => {
-        try {
-            // request
-        } catch (e) {
-            alert(e)
-        }
-    }
+        verifyEventParticipating()
+    }, [participantesLista])
 
     startEvent = async () => {
         try {
 
+            await api.post(`/eventos/${eventData.id}/participate`, {
+                "id": eventViewer.id
+            })
+
+            const response = await api.get(`/eventos/${eventData.id}/`)
+            const novosParticipantes = response.data.participantesEvento
+            setParticipantesLista(novosParticipantes)
+
             alert("Você está participando deste evento!")
-            setEventStatus(false)
 
         }
         catch (e) {
@@ -39,9 +40,28 @@ export default function Event({ navigation }) {
         }
     }
 
+    verifyEventParticipating = async () => {
+        try {
+            var listaAux =[]
+            participantesLista.filter( (e) => {return listaAux.push(e.id)})      
+
+            listaAux.includes(eventViewer.id)
+                ?
+                setEventViewerIsOn(true)
+                :
+                setEventViewerIsOn(false)
+        }
+        catch (e) {
+
+        }
+    }
+
+    
+
     endEvent = async () => {
         try {
 
+            await api.delete(`eventos/${eventData.id}/quit?asp_id=${eventViewer.id}`)
             alert("Você saiu deste evento.")
             navigation.navigate('Menu')
 
@@ -79,9 +99,15 @@ export default function Event({ navigation }) {
             {/* OPÇÕES E ASPIRANTES NO EVENTO */}
             <View style={{ flexDirection: "row" }}>
                 <View style={styles.optionsBox}>
-                    <TouchableOpacity style={styles.buttonOption}></TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonOption}></TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonOption}></TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonOption}>
+                        <Text style={styles.txtSmallButton}> Descrição </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonOption}>
+                        <Text style={styles.txtSmallButton}> Detalhes </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonOption}>
+                        <Text style={styles.txtSmallButton}> Denunciar </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.participationBox}>
@@ -90,9 +116,9 @@ export default function Event({ navigation }) {
                         {participantesLista[0] != null ? participantesLista.map((e, i) => {
                             return (<View style={styles.participantCard} key={i}>
                                 <View style={styles.participantPhoto} />
-                                <Text style={styles.participantName}> {e} </Text>
+                                <Text style={styles.participantName}> {e.nome} </Text>
                             </View>)
-                        }) : <View style={{ marginLeft: 30}}><Text style={styles.participantName}> Sem participantes </Text></View>}
+                        }) : <View style={{ marginLeft: 30 }}><Text style={styles.participantName}> Sem participantes </Text></View>}
                     </ScrollView>
                 </View>
 
@@ -100,7 +126,17 @@ export default function Event({ navigation }) {
 
             {/* BOTÃO DE ENTRAR/SAIR DO EVENTO */}
             {
-                eventStatus ?
+                eventStatus
+                    ?
+                    eventViewerIsOn 
+                    ?
+                    <TouchableOpacity style={styles.btnEnd} onPress={endEvent}>
+                        <Icon name="close" size={20} color="white" style={{ alignSelf: "center" }} />
+                        <Text style={styles.txtBtn}>
+                            Sair
+                        </Text>
+                    </TouchableOpacity>
+                    :
                     <TouchableOpacity style={styles.btnStart} onPress={startEvent}>
                         <Icon name="check" size={20} color="white" style={{ alignSelf: "center" }} />
                         <Text style={styles.txtBtn}>
@@ -108,12 +144,7 @@ export default function Event({ navigation }) {
                         </Text>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity style={styles.btnEnd} onPress={endEvent}>
-                        <Icon name="close" size={20} color="white" style={{ alignSelf: "center" }} />
-                        <Text style={styles.txtBtn}>
-                            Sair
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={styles.txtBtn}> O evento está desativado. </Text>
             }
 
         </View>
@@ -172,7 +203,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 8
     },
     buttonOption: {
-        height: 45, 
+        height: 45,
         width: 120,
         borderRadius: 8,
         backgroundColor: "skyblue",
@@ -238,5 +269,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignSelf: "center"
+    },
+    txtSmallButton: {
+        color: "white",
+        fontWeight: "bold",
+        alignSelf: "center",
+        marginTop: 13
     }
 })

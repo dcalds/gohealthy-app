@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '../../services/api'
 
 export default function MyEvents({ navigation }) {
 
-    const [create, setCreate] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4"])
-    const [participante, setParticipante] = useState(["Evento 1", "Evento 2", "Evento 3", "Evento 4"])
-
-    const [eventData, setEventData] = useState()
+    const [create, setCreate] = useState([])
+    const [participante, setParticipante] = useState([])
 
     useEffect(() => {
         getData()
@@ -15,7 +14,11 @@ export default function MyEvents({ navigation }) {
 
     getData = async () => {
         try {
-            // something
+            
+            const response = await api.get('/eventos')
+            const eventos = response.data
+            setCreate(eventos)
+
         } catch (e) {
             alert(e)
         }
@@ -25,24 +28,36 @@ export default function MyEvents({ navigation }) {
         <View style={styles.mainContainer}>
 
             <View style={styles.myEvents}>
-                <Text style={styles.txtMyEvents}> Eventos do Danilo </Text>
+                <Text style={styles.txtMyEvents}> Meus Eventos </Text>
             </View>
 
             <View>
                 <Text style={styles.txtMyEventsSecondary}> Criados </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
-                    {create.map((e,i) => <TouchableOpacity key={i} style={styles.evetCard}>
-                        <Text style={styles.nameEventCard}>{e}</Text>
-                    </TouchableOpacity>)}
+                    {
+                    create[0] != null
+                    ?
+                    create.map((e,i) => <TouchableOpacity key={i} style={styles.evetCard}>
+                        <Text style={styles.nameEventCard}>{e.nome}</Text>
+                    </TouchableOpacity>)
+                    :
+                    <Text style={styles.txtWarning}> Você ainda não criou nenhum evento. </Text>
+                    }
                 </ScrollView>
             </View>
 
             <View>
                 <Text style={styles.txtMyEventsSecondary}> Participando </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
-                    {participante.map((e,i) => <TouchableOpacity key={i} style={styles.partCard}>
-                        <Text style={styles.namePartCard}>{e}</Text>
-                    </TouchableOpacity>)}
+                    { 
+                    participante[0] != null
+                    ?
+                    participante.map((e,i) => <TouchableOpacity key={i} style={styles.partCard}>
+                        <Text style={styles.namePartCard}>{e.nome}</Text>
+                    </TouchableOpacity>)
+                    :
+                    <Text style={styles.txtWarning} > Você ainda não está participando de nenhum evento. </Text>
+                    }
                 </ScrollView>
             </View>
 
@@ -109,14 +124,16 @@ const styles = StyleSheet.create({
     nameEventCard: {
         marginTop: 10,
         marginLeft: 15,
-        fontSize:   16,
-        color: "#151C48"
+        fontSize:   19,
+        color: "#151C48",
+        fontWeight: "bold"
     },
     namePartCard: {
         marginTop: 10,
         marginLeft: 15,
-        fontSize:   16,
-        color: "#151C48"
+        fontSize:   19,
+        color: "#151C48",
+        fontWeight: "bold"
     },
     btnCreateEventLabel: {
         justifyContent: "center",
@@ -137,5 +154,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "white",
         fontWeight: "bold"
+    },
+    txtWarning: {
+        margin:10,
+        color: "white",
+        alignSelf: "center"
     }
 })

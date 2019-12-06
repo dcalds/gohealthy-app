@@ -107,7 +107,7 @@ const Stack = createAppContainer(createStackNavigator(
 
   ,
 
-  { initialRouteName: "Tabs" }
+  { initialRouteName: "Main" }
 
 ));
 
